@@ -187,77 +187,168 @@
   font-size: 14px;
 }
 
-/* ── Mobile only — desktop above is untouched ── */
+/* ─────────────────────────────────────────
+   MOBILE — 600px and below
+   Each table row becomes a card
+   No JSX changes needed
+───────────────────────────────────────── */
 @media (max-width: 600px) {
 
-  /* Toolbar: stack everything vertically */
+  /* Stack toolbar items */
   .toolbar {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .searchInput {
-    width: 100%;
-    min-width: unset;
-  }
-
-  .select {
-    width: 100%;
-  }
-
-  .exportBtn {
-    width: 100%;
-    text-align: center;
-  }
-
+  .searchInput,
+  .select,
+  .exportBtn,
   .addBtn {
     width: 100%;
-    text-align: center;
+    min-width: unset;
+    box-sizing: border-box;
   }
 
-  /* Table: make it horizontally scrollable instead of overflowing */
+  /* Turn table into block layout — each row becomes a card */
   .tableWrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: var(--radius);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
   }
 
   .table {
-    min-width: 500px;
+    display: block;
   }
 
-  /* Reduce padding on cells to save space */
-  .table th,
-  .table td {
-    padding: 9px 10px;
-    font-size: 12px;
-  }
-
-  /* Hide Category column on small screens */
-  .table th:nth-child(3),
-  .table td:nth-child(3) {
+  .table thead {
     display: none;
   }
 
-  /* Shrink delete button area */
+  .table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    gap: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    transition: border-color var(--transition);
+  }
+
+  .table tbody tr:hover {
+    border-color: var(--accent2);
+  }
+
+  .table tbody tr:hover td {
+    background: transparent;
+  }
+
+  .table td {
+    display: block;
+    padding: 3px 0;
+    border-bottom: none;
+    font-size: 13px;
+  }
+
+  /* Date — top left, muted small text */
+  .table td:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 11px;
+    color: var(--text2);
+  }
+
+  /* Description — middle left, bold prominent */
+  .table td:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text0);
+    padding-bottom: 6px;
+  }
+
+  /* Category — bottom left */
+  .table td:nth-child(3) {
+    grid-column: 1;
+    grid-row: 3;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Amount — top right, large */
+  .table td:nth-child(4) {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    text-align: right;
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* Type badge — bottom right */
+  .table td:nth-child(5) {
+    grid-column: 2;
+    grid-row: 3;
+    text-align: right;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  /* Delete button — sits inside the type cell on the right */
+  .table td:nth-child(6) {
+    grid-column: 2;
+    grid-row: 3;
+    text-align: right;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
   .deleteBtn {
-    font-size: 16px;
-    padding: 2px 4px;
+    font-size: 14px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text2);
+  }
+
+  .deleteBtn:hover {
+    color: var(--accent4);
+    border-color: var(--accent4);
+    background: rgba(248, 113, 113, 0.08);
   }
 }
 
-/* Very small screens (360px and below) */
+/* Very small screens */
 @media (max-width: 360px) {
-
-  .table th,
-  .table td {
-    padding: 8px 8px;
-    font-size: 11px;
+  .table tbody tr {
+    grid-template-columns: 1fr auto;
   }
 
-  /* Also hide Type column on very small screens */
-  .table th:nth-child(5),
-  .table td:nth-child(5) {
-    display: none;
+  .table td:nth-child(2) {
+    font-size: 13px;
+  }
+
+  .table td:nth-child(4) {
+    font-size: 14px;
   }
 }
