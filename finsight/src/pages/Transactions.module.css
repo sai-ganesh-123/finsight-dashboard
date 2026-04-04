@@ -187,10 +187,77 @@
   font-size: 14px;
 }
 
+/* ── Mobile only — desktop above is untouched ── */
 @media (max-width: 600px) {
 
+  /* Toolbar: stack everything vertically */
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchInput {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .select {
+    width: 100%;
+  }
+
+  .exportBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .addBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Table: make it horizontally scrollable instead of overflowing */
+  .tableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius);
+  }
+
+  .table {
+    min-width: 500px;
+  }
+
+  /* Reduce padding on cells to save space */
+  .table th,
+  .table td {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  /* Hide Category column on small screens */
   .table th:nth-child(3),
   .table td:nth-child(3) {
+    display: none;
+  }
+
+  /* Shrink delete button area */
+  .deleteBtn {
+    font-size: 16px;
+    padding: 2px 4px;
+  }
+}
+
+/* Very small screens (360px and below) */
+@media (max-width: 360px) {
+
+  .table th,
+  .table td {
+    padding: 8px 8px;
+    font-size: 11px;
+  }
+
+  /* Also hide Type column on very small screens */
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
     display: none;
   }
 }
