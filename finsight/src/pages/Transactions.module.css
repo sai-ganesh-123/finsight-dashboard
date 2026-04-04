@@ -1,28 +1,18 @@
-/* ── Toolbar ── */
 .toolbar {
   display: flex;
-  flex-direction: column;
   gap: 10px;
-  margin-bottom: 12px;
-}
-
-.filterRow {
-  display: flex;
-  gap: 10px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
-}
-
-.actionRow {
-  display: flex;
-  gap: 10px;
+  align-items: center;
 }
 
 .searchInput {
-  width: 100%;
+  flex: 1;
+  min-width: 160px;
   background: var(--bg2);
   border: 1px solid var(--border);
   color: var(--text0);
-  padding: 9px 12px;
+  padding: 8px 12px;
   border-radius: 8px;
   font-size: 13px;
   outline: none;
@@ -34,12 +24,10 @@
 }
 
 .select {
-  flex: 1;
-  min-width: 120px;
   background: var(--bg2);
   border: 1px solid var(--border);
   color: var(--text0);
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-radius: 8px;
   font-size: 13px;
   outline: none;
@@ -52,7 +40,6 @@
 }
 
 .exportBtn {
-  flex: 1;
   background: var(--bg2);
   border: 1px solid var(--border);
   color: var(--text1);
@@ -60,7 +47,6 @@
   border-radius: 8px;
   font-size: 13px;
   cursor: pointer;
-  text-align: center;
   transition: border-color var(--transition), color var(--transition);
 }
 
@@ -70,7 +56,6 @@
 }
 
 .addBtn {
-  flex: 1;
   background: var(--accent);
   color: #000;
   border: none;
@@ -79,7 +64,6 @@
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
-  text-align: center;
   transition: opacity var(--transition);
 }
 
@@ -87,17 +71,7 @@
   opacity: 0.85;
 }
 
-/* ── Result Count ── */
-.resultCount {
-  font-size: 12px;
-  color: var(--text2);
-  margin-bottom: 10px;
-  padding: 0 2px;
-}
-
-/* ── Desktop Table ── */
 .tableWrap {
-  display: block;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -107,7 +81,6 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 520px;
 }
 
 .table th {
@@ -199,115 +172,6 @@
   background: rgba(248, 113, 113, 0.1);
 }
 
-/* ── Mobile Cards ── */
-.cardList {
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.txnCard {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px;
-  animation: cardIn 0.2s ease both;
-  transition: border-color var(--transition);
-}
-
-.txnCard:hover {
-  border-color: var(--accent2);
-}
-
-@keyframes cardIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.cardTop {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.cardDesc {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text0);
-  flex: 1;
-  line-height: 1.4;
-}
-
-.cardAmount {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 500;
-  flex-shrink: 0;
-}
-
-.cardMeta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.cardMetaRight {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.cardDate {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text2);
-}
-
-.cardFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
-}
-
-.cardId {
-  font-size: 11px;
-  color: var(--text2);
-  font-family: var(--font-mono);
-}
-
-.cardDeleteBtn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text2);
-  padding: 5px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-  font-family: var(--font-main);
-  transition: color var(--transition), border-color var(--transition), background var(--transition);
-}
-
-.cardDeleteBtn:hover {
-  color: var(--accent4);
-  border-color: var(--accent4);
-  background: rgba(248, 113, 113, 0.08);
-}
-
-/* ── Empty state ── */
 .empty {
   text-align: center;
   padding: 56px 24px;
@@ -323,53 +187,10 @@
   font-size: 14px;
 }
 
-/* ── Responsive breakpoints ── */
-
-/* Tablet: stack selects and hide less important table columns */
-@media (max-width: 768px) {
-  .filterRow {
-    flex-wrap: wrap;
-  }
-
-  .select {
-    min-width: calc(50% - 5px);
-    flex: none;
-  }
-}
-
-/* Mobile: hide table, show cards */
 @media (max-width: 600px) {
-  .tableWrap {
+
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
     display: none;
-  }
-
-  .cardList {
-    display: flex;
-  }
-
-  .actionRow {
-    flex-direction: row;
-  }
-
-  .exportBtn,
-  .addBtn {
-    flex: 1;
-  }
-}
-
-/* Very small screens */
-@media (max-width: 360px) {
-  .actionRow {
-    flex-direction: column;
-  }
-
-  .exportBtn,
-  .addBtn {
-    flex: none;
-    width: 100%;
-  }
-
-  .select {
-    min-width: 100%;
   }
 }
