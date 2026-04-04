@@ -34,6 +34,7 @@ export default function Transactions() {
 
   return (
     <div>
+      {/* Toolbar */}
       <div className={styles.toolbar}>
         <input
           className={styles.searchInput}
@@ -41,27 +42,36 @@ export default function Transactions() {
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
-        <select className={styles.select} value={filterType} onChange={e => setFilterType(e.target.value)}>
-          <option value="">All Types</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-        <select className={styles.select} value={filterCat} onChange={e => setFilterCat(e.target.value)}>
-          <option value="">All Categories</option>
-          {categories.map(c => <option key={c}>{c}</option>)}
-        </select>
-        <select className={styles.select} value={sortBy} onChange={e => setSortBy(e.target.value)}>
-          <option value="date-desc">Newest First</option>
-          <option value="date-asc">Oldest First</option>
-          <option value="amount-desc">Amount High</option>
-          <option value="amount-asc">Amount Low</option>
-        </select>
-        <button className={styles.exportBtn} onClick={() => exportToCSV(transactions)}>Export CSV</button>
-        {isAdmin && (
-          <button className={styles.addBtn} onClick={() => setShowModal(true)}>+ Add</button>
-        )}
+        <div className={styles.filterRow}>
+          <select className={styles.select} value={filterType} onChange={e => setFilterType(e.target.value)}>
+            <option value="">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <select className={styles.select} value={filterCat} onChange={e => setFilterCat(e.target.value)}>
+            <option value="">All Categories</option>
+            {categories.map(c => <option key={c}>{c}</option>)}
+          </select>
+          <select className={styles.select} value={sortBy} onChange={e => setSortBy(e.target.value)}>
+            <option value="date-desc">Newest First</option>
+            <option value="date-asc">Oldest First</option>
+            <option value="amount-desc">Amount High</option>
+            <option value="amount-asc">Amount Low</option>
+          </select>
+        </div>
+        <div className={styles.actionRow}>
+          <button className={styles.exportBtn} onClick={() => exportToCSV(transactions)}>Export CSV</button>
+          {isAdmin && (
+            <button className={styles.addBtn} onClick={() => setShowModal(true)}>+ Add Transaction</button>
+          )}
+        </div>
       </div>
 
+      <div className={styles.resultCount}>
+        {filtered.length} transaction{filtered.length !== 1 ? 's' : ''} found
+      </div>
+
+      {/* Desktop Table */}
       <div className={styles.tableWrap}>
         {filtered.length === 0 ? (
           <div className={styles.empty}>
@@ -75,7 +85,10 @@ export default function Transactions() {
                 <th>Date</th>
                 <th>Description</th>
                 <th>Category</th>
-                <th onClick={() => setSortBy(sortBy === 'amount-desc' ? 'amount-asc' : 'amount-desc')} className={styles.sortable}>
+                <th
+                  onClick={() => setSortBy(sortBy === 'amount-desc' ? 'amount-asc' : 'amount-desc')}
+                  className={styles.sortable}
+                >
                   Amount {sortBy.startsWith('amount') ? (sortBy === 'amount-desc' ? '↓' : '↑') : ''}
                 </th>
                 <th>Type</th>
@@ -111,6 +124,58 @@ export default function Transactions() {
               ))}
             </tbody>
           </table>
+        )}
+      </div>
+
+      {/* Mobile Cards */}
+      <div className={styles.cardList}>
+        {filtered.length === 0 ? (
+          <div className={styles.empty}>
+            <div className={styles.emptyIcon}>◌</div>
+            <p>No transactions found</p>
+          </div>
+        ) : (
+          filtered.map((t, i) => (
+            <div
+              key={t.id}
+              className={styles.txnCard}
+              style={{ animationDelay: `${i * 0.03}s` }}
+            >
+              <div className={styles.cardTop}>
+                <div className={styles.cardDesc}>{t.desc}</div>
+                <div
+                  className={styles.cardAmount}
+                  style={{ color: t.type === 'income' ? 'var(--accent)' : 'var(--accent4)' }}
+                >
+                  {t.type === 'income' ? '+' : '-'}{fmt(t.amount)}
+                </div>
+              </div>
+              <div className={styles.cardMeta}>
+                <span className={styles.catWrap}>
+                  <span
+                    className={styles.catDot}
+                    style={{ background: CATEGORY_COLORS[t.category] || '#94a3b8' }}
+                  />
+                  {t.category}
+                </span>
+                <div className={styles.cardMetaRight}>
+                  <span className={`${styles.badge} ${styles[t.type]}`}>{t.type}</span>
+                  <span className={styles.cardDate}>{t.date}</span>
+                </div>
+              </div>
+              {isAdmin && (
+                <div className={styles.cardFooter}>
+                  <span className={styles.cardId}>#{t.id}</span>
+                  <button
+                    className={styles.cardDeleteBtn}
+                    onClick={() => deleteTransaction(t.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          ))
         )}
       </div>
 
