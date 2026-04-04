@@ -1,0 +1,102 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  width: 420px;
+  max-width: 92vw;
+  animation: slideUp 0.2s ease;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text0);
+  margin-bottom: 20px;
+}
+
+.group {
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text0);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.input:focus {
+  border-color: var(--accent2);
+}
+
+.error {
+  color: var(--accent4);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.btns {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cancel {
+  background: var(--bg3);
+  border: none;
+  color: var(--text1);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background var(--transition);
+}
+
+.cancel:hover { background: var(--border); }
+
+.save {
+  background: var(--accent);
+  border: none;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity var(--transition);
+}
+
+.save:hover { opacity: 0.85; }
