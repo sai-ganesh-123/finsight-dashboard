@@ -187,14 +187,10 @@
   font-size: 14px;
 }
 
-/* ─────────────────────────────────────────
-   MOBILE — 600px and below
-   Each table row becomes a card
-   No JSX changes needed
-───────────────────────────────────────── */
+
 @media (max-width: 600px) {
 
-  /* Stack toolbar items */
+  /* Stack toolbar vertically */
   .toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -209,7 +205,7 @@
     box-sizing: border-box;
   }
 
-  /* Turn table into block layout — each row becomes a card */
+  /* Remove table wrapper card styling */
   .tableWrap {
     background: transparent;
     border: none;
@@ -231,15 +227,15 @@
     gap: 10px;
   }
 
+  /* Row = card */
   .table tbody tr {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     grid-template-rows: auto auto auto;
-    gap: 0;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 14px;
+    padding: 12px 14px;
     transition: border-color var(--transition);
   }
 
@@ -251,81 +247,87 @@
     background: transparent;
   }
 
+  .table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
   .table td {
     display: block;
-    padding: 3px 0;
     border-bottom: none;
+    padding: 0;
     font-size: 13px;
   }
 
-  /* Date — top left, muted small text */
+  /* td 1 — Date: row 1, col 1 */
   .table td:nth-child(1) {
     grid-column: 1;
     grid-row: 1;
     font-size: 11px;
     color: var(--text2);
+    font-family: var(--font-mono);
+    padding-bottom: 3px;
   }
 
-  /* Description — middle left, bold prominent */
+  /* td 2 — Description: row 2, col 1 */
   .table td:nth-child(2) {
     grid-column: 1;
     grid-row: 2;
     font-size: 14px;
     font-weight: 500;
     color: var(--text0);
-    padding-bottom: 6px;
+    padding-bottom: 10px;
   }
 
-  /* Category — bottom left */
+  /* td 3 — Category: row 3, col 1 */
   .table td:nth-child(3) {
     grid-column: 1;
     grid-row: 3;
-    padding-top: 6px;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
     border-top: 1px solid var(--border);
+    font-size: 12px;
   }
 
-  /* Amount — top right, large */
+  /* td 4 — Amount: rows 1+2, col 2+3 — spans right side top */
   .table td:nth-child(4) {
-    grid-column: 2;
+    grid-column: 2 / 4;
     grid-row: 1 / 3;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     font-size: 15px;
     font-weight: 500;
     padding-left: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
   }
 
-  /* Type badge — bottom right */
+  /* td 5 — Type badge: row 3, col 2 — right-aligned bottom */
   .table td:nth-child(5) {
     grid-column: 2;
     grid-row: 3;
-    text-align: right;
-    padding-top: 6px;
-    border-top: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
+    padding-top: 10px;
+    padding-left: 8px;
+    border-top: 1px solid var(--border);
   }
 
-  /* Delete button — sits inside the type cell on the right */
+  /* td 6 — Delete button: row 3, col 3 — far right bottom */
   .table td:nth-child(6) {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 3;
-    text-align: right;
-    padding-top: 6px;
-    border-top: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
+    padding-top: 10px;
+    padding-left: 8px;
+    border-top: 1px solid var(--border);
   }
 
   .deleteBtn {
-    font-size: 14px;
-    padding: 3px 8px;
+    font-size: 16px;
+    padding: 2px 8px;
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text2);
@@ -338,12 +340,7 @@
   }
 }
 
-/* Very small screens */
 @media (max-width: 360px) {
-  .table tbody tr {
-    grid-template-columns: 1fr auto;
-  }
-
   .table td:nth-child(2) {
     font-size: 13px;
   }
