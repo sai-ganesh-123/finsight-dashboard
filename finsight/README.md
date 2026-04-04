@@ -6,7 +6,7 @@ A clean, interactive finance dashboard built with **React + Vite** for tracking 
 
 ## Live Preview
 
-> Deploy to [Vercel](https://vercel.com) or [Netlify](https://netlify.com) in one click — no backend required.
+https://finsight-dashboard-mocha.vercel.app/
 
 ---
 
