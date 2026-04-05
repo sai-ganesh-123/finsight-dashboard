@@ -140,15 +140,16 @@ npm run preview   # preview the production build locally
 
 ## 🧠 State Management Approach
 
-All application state lives in a single **React Context** (`FinanceContext`), which:
-
-- Initialises transactions from `localStorage` (falls back to seed data on first load)
-- Persists any changes back to `localStorage` via a `useEffect`
-- Exposes `addTransaction` and `deleteTransaction` as stable callbacks via `useCallback`
-- Derives summary stats (`income`, `expense`, `balance`, `savingsRate`) directly from the transaction array — no duplication
-- Manages `role` and `theme` as simple string state
-
-Page-level UI state (search query, filters, sort order, modal visibility) stays **local** inside each page component, keeping the global context lean.
+All global application state is managed through a single **React Context** called `FinanceContext`. This was chosen over external libraries like Redux or Zustand because the application state is straightforward and does not require middleware, async thunks, or complex selectors.
+ 
+The context handles:
+ 
+- **Transactions** — initialised from localStorage on first load, falling back to seed data if nothing is stored. Any add or delete operation immediately saves back to localStorage via a `useEffect`.
+- **Role** — stored as a simple string (`admin` or `viewer`). Controls which UI elements are visible.
+- **Theme** — stored as a simple string (`dark` or `light`). Applies a `data-theme` attribute to the root element which CSS custom properties respond to.
+- **Derived stats** — `income`, `expense`, `balance`, and `savingsRate` are calculated directly from the transactions array inside the context. There is no separate state for these values, which eliminates the risk of them going out of sync.
+ 
+Page-level UI state such as search query, active filters, sort order, and modal visibility is kept **local** inside each page component using `useState`. This keeps the global context lean and focused only on data that needs to be shared across pages.
 
 ---
 
@@ -163,7 +164,7 @@ Page-level UI state (search query, filters, sort order, modal visibility) stays 
 | Delete transaction | ✅    | ❌     |
 | Export CSV         | ✅    | ✅     |
 
-Switch roles using the dropdown in the top-right corner. Role is stored in context (not persisted — resets on refresh by design, as this is a frontend-only demo).
+Switch roles using the dropdown in the top-right corner.
 
 ---
 
